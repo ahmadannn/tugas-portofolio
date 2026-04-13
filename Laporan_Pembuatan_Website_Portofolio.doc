@@ -1,0 +1,235 @@
+<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+<head>
+    <meta charset="utf-8">
+    <title>Laporan Tugas</title>
+    <!--[if gte mso 9]>
+    <xml>
+        <w:WordDocument>
+            <w:View>Print</w:View>
+            <w:Zoom>100</w:Zoom>
+        </w:WordDocument>
+    </xml>
+    <![endif]-->
+    <style>
+        body { font-family: "Calibri", "Arial", sans-serif; line-height: 1.5; font-size: 11pt; }
+        h1, h2, h3 { color: #000; }
+        .center { text-align: center; }
+        .page-break { page-break-after: always; }
+        pre { background: #f4f4f4; padding: 10px; border: 1px solid #ccc; font-family: Consolas, monospace; font-size: 9.5pt; white-space: pre-wrap; }
+        code { font-family: Consolas, monospace; background: #f4f4f4; padding: 2px 4px; }
+    </style>
+</head>
+<body>
+    <div class="center">
+        <h1>TUGAS</h1>
+        <h2>Aplikasi Berbasis Platform</h2>
+        <br><br><br>
+        <p><strong>Disusun oleh:</strong><br>
+        Ahmadan Syaridin<br>
+        2311102038<br>
+        S1 IF-11-REG04</p>
+        <br><br>
+        <p><strong>Dosen Pengampu:</strong><br>
+        Cahyo Prihantoro, S.Kom., M.Eng</p>
+        <br><br><br>
+        <p><strong>PROGRAM STUDI S1 INFORMATIKA</strong><br>
+        <strong>FAKULTAS INFORMATIKA</strong><br>
+        <strong>TELKOM UNIVERSITY</strong><br>
+        <strong>2026/2027</strong></p>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2>SOAL</h2>
+    <p>Bikin website pilih salah satu tema dari website lamar kerja, cv atau portofolio.<br>
+    Tugas 1 wajib menggunakan native html, CSS, php, ajax, js.</p>
+    <hr>
+
+    <h2>Link GIT</h2>
+    <p><strong>[Masukkan Link Repository GitHub/GitLab Anda Di Sini]</strong></p>
+    <hr>
+
+    <h2>Source Code</h2>
+    <p>Berikut adalah keseluruhan struktur direktori dan kode sumber (source code) yang membangun aplikasi portofolio:</p>
+
+    <h3>1. File Entry-Point <code>index.php</code></h3>
+    <pre><code>&lt;?php
+$page = isset($_GET['page']) ? $_GET['page'] : 'home';
+$allowed_pages = ['home', 'about', 'works', 'contact'];
+
+if (!in_array($page, $allowed_pages)) {
+    $page = 'home';
+}
+
+$titles = [
+    'home' =&gt; 'Beranda',
+    'about' =&gt; 'Tentang Saya',
+    'works' =&gt; 'Portofolio',
+    'contact' =&gt; 'Hubungi Saya'
+];
+$page_title = $titles[$page];
+
+include 'includes/header.php';
+
+$page_path = "pages/{$page}.php";
+if (file_exists($page_path)) {
+    include $page_path;
+} else {
+    echo "&lt;h2&gt;Halaman tidak ditemukan!&lt;/h2&gt;";
+}
+
+include 'includes/footer.php';
+?&gt;</code></pre>
+
+    <h3>2. Komponen <code>includes/header.php</code></h3>
+    <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="id"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Portofolio | &lt;?= isset($page_title) ? $page_title : 'Website' ?&gt;&lt;/title&gt;
+    &lt;link rel="stylesheet" href="assets/css/style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;header&gt;
+        &lt;nav class="navbar"&gt;
+            &lt;div class="logo"&gt;
+                &lt;a href="index.php?page=home"&gt;MyPortofolio&lt;/a&gt;
+            &lt;/div&gt;
+            &lt;ul class="nav-links"&gt;
+                &lt;li&gt;&lt;a href="index.php?page=home" class="&lt;?= ($page == 'home') ? 'active' : '' ?&gt;"&gt;Beranda&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="index.php?page=about" class="&lt;?= ($page == 'about') ? 'active' : '' ?&gt;"&gt;Tentang&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="index.php?page=works" class="&lt;?= ($page == 'works') ? 'active' : '' ?&gt;"&gt;Portofolio&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="index.php?page=contact" class="&lt;?= ($page == 'contact') ? 'active' : '' ?&gt;"&gt;Kontak&lt;/a&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/nav&gt;
+    &lt;/header&gt;
+    &lt;main class="container"&gt;</code></pre>
+
+    <h3>3. Komponen Konfigurasi Tampilan <code>assets/css/style.css</code> (Cuplikan Utama)</h3>
+    <pre><code>/* Menggunakan layout Flexbox untuk memastikan halaman adaptif dan ditengah */
+body {
+    font-family: 'Outfit', sans-serif;
+    line-height: 1.6;
+    background-color: #0f172a;
+    color: #f8fafc;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+/* Efek Glassmorphism transparan pada Navbar */
+header {
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(12px);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+/* Penerapan CSS Grid untuk penyusunan halaman list card portofolio */
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}</code></pre>
+
+    <h3>4. Komponen Halaman Kontak <code>pages/contact.php</code></h3>
+    <pre><code>&lt;section class="page-section animate-fade-in"&gt;
+    &lt;div class="content-wrapper"&gt;
+        &lt;h2 class="section-title"&gt;Hubungi &lt;span class="highlight"&gt;Saya&lt;/span&gt;&lt;/h2&gt;
+        
+        &lt;div class="contact-container"&gt;
+            &lt;form id="contact-form"&gt;
+                &lt;div class="form-group"&gt;
+                    &lt;label for="name"&gt;Nama Lengkap&lt;/label&gt;
+                    &lt;input type="text" id="name" name="name" required&gt;
+                &lt;/div&gt;
+                &lt;!-- ... elemen email &amp; pesan ... --&gt;
+                &lt;button type="submit" class="btn" id="submit-btn" style="width: 100%;"&gt;Kirim Pesan&lt;/button&gt;
+                &lt;div id="form-notification" class="hidden"&gt;&lt;/div&gt;
+            &lt;/form&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+
+    <h3>5. Skrip AJAX Fetch <code>assets/js/script.js</code></h3>
+    <pre><code>document.addEventListener("DOMContentLoaded", () =&gt; {
+    const contactForm = document.getElementById("contact-form");
+    const submitBtn = document.getElementById("submit-btn");
+    const notification = document.getElementById("form-notification");
+
+    if (contactForm) {
+        contactForm.addEventListener("submit", async function(e) {
+            e.preventDefault(); 
+            submitBtn.innerText = "Mengirim...";
+            
+            try {
+                const formData = new FormData(this);
+                const response = await fetch('api/process_contact.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+                
+                notification.className = data.status === 'success' ? 'notif-success' : 'notif-error';
+                notification.innerText = data.message;
+            } catch (error) {
+                notification.className = 'notif-error';
+                notification.innerText = "Terjadi kesalahan koneksi Backend Server.";
+            } finally {
+                submitBtn.innerText = "Kirim Pesan";
+            }
+        });
+    }
+});</code></pre>
+
+    <h3>6. Logic Backend PHP <code>api/process_contact.php</code></h3>
+    <pre><code>&lt;?php
+header('Content-Type: application/json');
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = htmlspecialchars($_POST['name'] ?? '');
+    $email = htmlspecialchars($_POST['email'] ?? '');
+    $message = htmlspecialchars($_POST['message'] ?? '');
+
+    $fileBackupPesan = __DIR__ . '/kumpulan_pesan.txt';
+    $isiPesanLog = "Waktu: " . date("Y-m-d H:i:s") . "\nNama Pengirim: $name\nIsi: $message\n\n";
+
+    file_put_contents($fileBackupPesan, $isiPesanLog, FILE_APPEND);
+
+    echo json_encode([
+        'status' =&gt; 'success',
+        'message' =&gt; "Hore! Terima kasih {$name}. Pesan telah masuk sistem."
+    ]);
+}
+?&gt;</code></pre>
+
+    <hr>
+
+    <h2>Penjelasan Program</h2>
+
+    <h3>A. Cara Kerja Per Bagian Secara Utuh</h3>
+    <p>Sistem implementasi dibangun menggunakan konfigurasi <strong>Native Modular PHP</strong>. Arus eksekusi dimulai dan dikendalikan sepenuhnya melalui File Entry-Point <code>index.php</code>.</p>
+    <ol>
+        <li><strong>Penerimaan Parameter (Router):</strong> Saat pengguna berinteraksi di navigasi, parameter dilemparkan melalui metoda GET (contoh: <code>?page=contact</code>).</li>
+        <li><strong>Validasi Whitelist Keamanan:</strong> Skrip secara dinamis mengevaluasi jika paramater tersebut telah didefinisikan ke dalam larik (<code>array</code>) <code>$allowed_pages</code>. Filter ini memblokir ancaman manipulasi penindihan tautan pada direktori (Local File Inclusion Exploitation).</li>
+        <li><strong>Penyusunan Blok (Include):</strong> Menggunakan fungsi dasar PHP <code>include</code>, arsitektur program meletakkan <code>header.php</code> sebagai penutup dokumen awal, menjahit bagian tengah berdasarkan output page, dan kemudian menyelesaikan konstruksi elemen dengan menutup format lewat <code>footer.php</code>.</li>
+    </ol>
+
+    <h3>B. Logika Interaktivitas dan Real-Time Preview (JavaScript)</h3>
+    <p>Pendekatan manipulasi DOM dan kontrol alur transfer form dipercayakan kepada skrip asinkron menggunakan teknologi terbaru dari <strong>Fetch API JS (AJAX)</strong>.</p>
+    <ul>
+        <li>Setelah deteksi pemicu melalui Event Listener 'submit', sistem instan memutus prilaku normal penyerahan (submission) yang secara alamiah merespon memuat balik layar menggunakan baris perintah <code>e.preventDefault()</code>.</li>
+        <li>Modul internal <code>FormData()</code> mengekstrak nilai spesifik dari tag input sebelum mengalirkan data payload ke rute endpoint backend secara tertutup (Asynchronous).</li>
+        <li>Skema Request-Response berhasil memproduksi output Non-Blocking, yang mana sistem mengubah antarmuka div notifikasi HTML menjadi pesan umpan balik dari variabel konversi objek <code>.json()</code>.</li>
+    </ul>
+
+    <h3>C. Sistem Pelaporan dan Penyimpanan Data (PHP &amp; JSON)</h3>
+    <p>Permasalahan pada modul kontak memusat ke file <code>process_contact.php</code>. Karena tugas bersifat dasar struktural tanpa dependensi mesin Database MySQL Terpusat, manipulasi data berkala diaplikasikan lewat I/O tingkat berkas (File Manipulation).</p>
+    <ul>
+        <li><strong>Transmisi Header HTTP:</strong> Penanda instruktif header didefinisikan awal mengubah Content-Type berkas ke bentuk <code>application/json</code> supaya seragam dengan kaidah API Endpoint.</li>
+        <li><strong>Validasi Mutlak Lanjut:</strong> Parameter yang terbaca melalui inisialisasi Global Array <code>$_POST</code> dikenai penyaringan ketat instrumen bawaan <code>htmlspecialchars()</code> untuk membuang celah injeksi mematikan (Cross Site Scripting).</li>
+        <li><strong>Prosedur Penempelan Log Data (Appending):</strong> Melalui pemicuan logis Native <code>file_put_contents()</code>, sistem diperintahkan menciptakan sebuah dokumen <code>kumpulan_pesan.txt</code>, mencampur parameter baru dengan urutan waktu spesifik, dan mem-paste letaknya pada baris paling akhir.</li>
+        <li><strong>Format Keluaran:</strong> Keseluruhan proses diteruskan sebagai JSON format sebelum skrip melontarkannya ulang lewat object berstatus "success" kepada pendengar Fetch.</li>
+    </ul>
+</body>
+</html>
